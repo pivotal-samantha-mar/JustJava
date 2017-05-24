@@ -62,18 +62,17 @@
 
     <Button
         android:id="@+id/order"
-        android:layout_height="50dp"
-        android:layout_width="75dp"
-        android:background="#9E9E9E"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:text="Order"
         android:onClick="submitOrder" />
 
-    <Button
+    <!--<Button
         android:layout_height="50dp"
         android:layout_width="75dp"
         android:layout_marginTop="16dp"
         android:background="#F44336"
         android:text="clear"
-        android:onClick="clear" />
+        android:onClick="clear" />  -->
 
 </LinearLayout>
