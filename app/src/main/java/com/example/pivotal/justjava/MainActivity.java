@@ -31,23 +31,26 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
 
+            int price = calculatePrice(quantity);
+            //String priceMessage = "Total: " + "$" +price + "\nThank you!";
+            //displayMessage(priceMessage);
+            //displayPrice(price);
+            displayMessage(createOrderSummary(price));
 
-            String priceMessage = "Total: " + "$" +quantity*5 + "\nThank you!";
-            displayMessage(priceMessage);
 
     }
 
     public void increment(View view) {
 
         quantity++;
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     public void decrement(View view) {
 
         if (quantity >0) {
             quantity--;
-            display(quantity);
+            displayQuantity(quantity);
         }
     }
 
@@ -61,23 +64,30 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method displays the given quantity value on the screen.
      */
-    private void display(int number) {
+    private void displayQuantity(int amount) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
-        quantityTextView.setText("" + number);
-    }
-
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-
+        quantityTextView.setText("" + amount);
     }
 
     /**
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
+    }
+
+    private String createOrderSummary (int price) {
+
+        String priceMessage = "Name: Kaptain Kunal \n" + "Quantity: " + quantity+ "\n" + "Total: $" + price +"\n" +"Thank you!";
+        return priceMessage;
+
+
+    }
+
+    private int calculatePrice (int quantity) {
+
+        return quantity*5;
     }
 
 
