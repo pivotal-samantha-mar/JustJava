@@ -11,6 +11,8 @@ import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -19,6 +21,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     int quantity =0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +33,28 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whippedCream);
+        boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
 
-            int price = calculatePrice(quantity);
-            //String priceMessage = "Total: " + "$" +price + "\nThank you!";
-            //displayMessage(priceMessage);
-            //displayPrice(price);
-            displayMessage(createOrderSummary(price));
+        CheckBox choclateCheckBox = (CheckBox) findViewById(R.id.chocolate);
+        boolean hasChocolate = choclateCheckBox.isChecked();
+
+        EditText name = (EditText) findViewById(R.id.yourName);
+        String customerName = name.getText().toString();
+
+
+        int price = calculatePrice(quantity,hasWhippedCream,hasChocolate);
+        String priceMessage = createOrderSummary(price, hasWhippedCream, hasChocolate,customerName);
+        displayMessage(priceMessage);
 
 
     }
 
     public void increment(View view) {
-
+        if (quantity <100) {
         quantity++;
         displayQuantity(quantity);
+        }
     }
 
     public void decrement(View view) {
@@ -77,17 +88,36 @@ public class MainActivity extends AppCompatActivity {
         orderSummaryTextView.setText(message);
     }
 
-    private String createOrderSummary (int price) {
+    private String createOrderSummary (int price, boolean addWhippedCream, boolean addChocolate, String name) {
 
-        String priceMessage = "Name: Kaptain Kunal \n" + "Quantity: " + quantity+ "\n" + "Total: $" + price +"\n" +"Thank you!";
+        String priceMessage = "Name: " + name;
+        priceMessage += "\nAdd whipped cream? "+addWhippedCream;
+        priceMessage += "\nAdd chocolate? "+addChocolate;
+        priceMessage += "\nQuantity: " + quantity;
+        priceMessage += "\nTotal: $ "+price;
+        priceMessage += "\nThank you!";
+
         return priceMessage;
 
 
     }
 
-    private int calculatePrice (int quantity) {
+    private int calculatePrice (int quantity, boolean whippedCream, boolean chocolate) {
 
-        return quantity*5;
+        int basePrice = 5;
+
+        if (whippedCream) {
+            basePrice += 1;
+        }
+
+        if (chocolate) {
+
+            basePrice += 2;
+        }
+
+
+
+        return quantity*basePrice;
     }
 
 
