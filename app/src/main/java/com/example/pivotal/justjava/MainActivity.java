@@ -7,7 +7,9 @@
  */
 
 package com.example.pivotal.justjava;
+import android.content.Intent;
 import android.icu.text.NumberFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -45,7 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
         int price = calculatePrice(quantity,hasWhippedCream,hasChocolate);
         String priceMessage = createOrderSummary(price, hasWhippedCream, hasChocolate,customerName);
+
+        Intent email = new Intent(Intent.ACTION_SENDTO);
+        email.setData(Uri.parse("mailto: "));
+        email.putExtra(Intent.EXTRA_SUBJECT ,"Just Java order for " + customerName);
+        email.putExtra(Intent.EXTRA_TEXT,priceMessage);
+        if (email.resolveActivity(getPackageManager())!=null) {
+            startActivity(email);
+        }
         displayMessage(priceMessage);
+
 
 
     }
